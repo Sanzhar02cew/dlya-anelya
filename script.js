@@ -28,36 +28,37 @@ const wishDialog=$('#wish-dialog');document.querySelectorAll('.wish-flower').for
 let blown=false;function blow(){if(blown)return;blown=true;$('#cake').classList.add('extinguished');$('#cake').setAttribute('aria-label','Свечка погасла. Пусть желание сбудется!');$('#blow-button').hidden=true;$('#wish-success').hidden=false;$('#cake-instruction').innerHTML='Сохрани желание в своём сердце.<br>Оно обязательно найдёт дорогу к тебе 🤍';const r=$('#cake').getBoundingClientRect();confetti(r.x+r.width/2,r.y+70,70)}
 $('#cake').addEventListener('click',blow);$('#blow-button').addEventListener('click',blow);$('#relight').addEventListener('click',()=>{blown=false;$('#cake').classList.remove('extinguished');$('#cake').setAttribute('aria-label','Загадать желание и погасить свечку');$('#blow-button').hidden=false;$('#wish-success').hidden=true;$('#cake-instruction').innerHTML='Закрой глаза и подумай о самой заветной мечте.<br>А потом погаси свечку ✨'});
 
-let soundtrack=null,wantsMusic=true,soundtrackReady=false;
+const soundtrack=$('#soundtrack');
+let wantsMusic=true,playAttempt=0;
+soundtrack.volume=.55;
 function musicState(playing){
   $('#music').setAttribute('aria-pressed',String(playing));
   $('#music').setAttribute('aria-label',playing?'Выключить музыку':'Включить музыку');
   $('#music-label').textContent=playing?'Выключить музыку':'Включить музыку';
 }
-function tryMusic(){if(wantsMusic&&soundtrackReady){soundtrack.unMute();soundtrack.playVideo()}}
-window.onYouTubeIframeAPIReady=()=>{
-  soundtrack=new YT.Player('soundtrack',{
-    width:200,height:200,videoId:'0Zx-f6aGPzA',
-    playerVars:{autoplay:1,playsinline:1,controls:0,loop:1,playlist:'0Zx-f6aGPzA',rel:0,origin:location.origin},
-    events:{
-      onReady:event=>{soundtrackReady=true;event.target.setVolume(55);tryMusic()},
-      onStateChange:event=>{
-        if(event.data===YT.PlayerState.PLAYING){musicState(true)}
-        else if(event.data===YT.PlayerState.PAUSED){musicState(false)}
-        else if(event.data===YT.PlayerState.ENDED&&wantsMusic){event.target.playVideo()}
-      },
-      onAutoplayBlocked:()=>{musicState(false);$('#music-label').textContent='Коснись экрана ♫'},
-      onError:()=>{musicState(false);$('#music-label').textContent='Музыка недоступна'}
-    }
-  });
-};
-const musicScript=document.createElement('script');musicScript.src='https://www.youtube.com/iframe_api';musicScript.async=true;document.head.append(musicScript);
-['pointerdown','touchstart','keydown'].forEach(type=>document.addEventListener(type,event=>{
+function tryMusic(){
+  if(!wantsMusic||!soundtrack.paused)return;
+  const attempt=++playAttempt;
+  try{
+    const playback=soundtrack.play();
+    if(playback?.catch)playback.catch(error=>{
+      if(attempt!==playAttempt||!wantsMusic||error.name==='AbortError')return;
+      musicState(false);
+      $('#music-label').textContent=error.name==='NotAllowedError'?'Коснись экрана ♫':'Музыка недоступна';
+    });
+  }catch{musicState(false);$('#music-label').textContent='Коснись экрана ♫'}
+}
+soundtrack.addEventListener('playing',()=>musicState(true));
+soundtrack.addEventListener('pause',()=>musicState(false));
+soundtrack.addEventListener('error',()=>{musicState(false);$('#music-label').textContent='Музыка недоступна'});
+soundtrack.addEventListener('canplay',tryMusic);
+['pointerdown','touchend','click','keydown'].forEach(type=>document.addEventListener(type,event=>{
   if(event.target.closest?.('#music'))return;
-  if(wantsMusic&&soundtrackReady&&soundtrack.getPlayerState()!==YT.PlayerState.PLAYING)tryMusic();
+  tryMusic();
 },{passive:true}));
 $('#music').addEventListener('click',()=>{
-  if(soundtrackReady&&soundtrack.getPlayerState()===YT.PlayerState.PLAYING){wantsMusic=false;soundtrack.pauseVideo();musicState(false)}
+  if(!soundtrack.paused){wantsMusic=false;++playAttempt;soundtrack.pause();musicState(false)}
   else{wantsMusic=true;tryMusic()}
 });
+tryMusic();
 if(privateLetterKey)$('#letter-lock-note').textContent='Это письмо адресовано только тебе. Нажми, чтобы открыть ♡';

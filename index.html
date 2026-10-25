@@ -86,7 +86,7 @@
   <header class="topbar">
     <a class="brand" href="#home" aria-label="В начало"><svg viewBox="0 0 100 100"><use href="#daisy"/></svg><span>От Санжара,<br><strong>с теплом.</strong></span></a>
     <span class="top-note">немного волшебства — только для тебя</span>
-    <button class="music-button" id="music" aria-label="Управление музыкой" aria-pressed="false"><span class="music-bars"><i></i><i></i><i></i><i></i></span><span id="music-label">Включить музыку</span></button>
+    <button class="music-button" id="music" aria-label="Включить музыку" aria-pressed="false"><span class="music-bars"><i></i><i></i><i></i><i></i></span><span id="music-label">Включить музыку</span></button>
   </header>
 
   <main>
@@ -156,13 +156,13 @@
       <div class="wish-success" id="wish-success" hidden role="status"><h3>Пусть всё сбудется, Anelya! 🤍</h3><p>Самые прекрасные мечты обязательно сбываются.</p><button class="text-button" id="relight">Зажечь свечку снова ↻</button></div>
     </section>
 
-    <footer><svg class="footer-flower" viewBox="0 0 100 100" aria-hidden="true"><use href="#daisy"/></svg><p>Пусть этот день будет таким же прекрасным, как ты.</p><span>Только для тебя. От Санжара ♡</span><br><a class="music-credit" href="https://www.youtube.com/watch?v=0Zx-f6aGPzA" target="_blank" rel="noopener noreferrer">♫ Kim · Любовь в алгоритмах</a><a href="#home" aria-label="Вернуться наверх">↑</a></footer>
+    <footer><svg class="footer-flower" viewBox="0 0 100 100" aria-hidden="true"><use href="#daisy"/></svg><p>Пусть этот день будет таким же прекрасным, как ты.</p><span>Только для тебя. От Санжара ♡</span><br><span class="music-credit">♫ Kim · Любовь в алгоритмах (TikTok Version)</span><a href="#home" aria-label="Вернуться наверх">↑</a></footer>
   </main>
 
   <dialog id="wish-dialog" class="wish-dialog"><button class="dialog-close" aria-label="Закрыть пожелание">×</button><span class="dialog-flower" aria-hidden="true">🌷</span><p class="eyebrow">ПОЖЕЛАНИЕ ДЛЯ ТЕБЯ</p><h2 id="dialog-title"></h2><p id="dialog-message"></p><button class="primary-button dialog-done">Спасибо ♡</button></dialog>
-  <div class="sound-source" id="youtube-container" aria-hidden="true"><div id="soundtrack"></div></div>
+  <audio id="soundtrack" src="assets/lubov-v-algoritmah.mp3" preload="auto" loop playsinline hidden></audio>
   <div class="toast" id="toast" role="status"></div>
   <script type="application/json" id="private-letter-data">{"iv":"krFeIDssV-sw4dwe","data":"02BzH549xpzObeYYLhFXFQiYaQn-xSzoO_gPCBb35BvMmwO9y5OxunrtxOwNlGH32KDbGs-zhUGf5NV2CMzQ_FFl2f5Twxb1Swlr66-gZbtYdC-J0IKNlWBF-k9GHGxe3w1cBGQnJaaISLFfd1cxzgf1E4PhboSSpo9bzQZSyam10_d4jH57Ckf7vBMpOhbnLY4cf6mxitI7Da2SdEVA1ARaMvIZ6aB0_NtCRtl5ErB3TsQBKTHivudUpF25QLZpH-ItwtVDVsIH0dgy6AI8KiHkOQIMMJBlQzCsbn2PStU5f3-kRR3TYLB_GLtVcCqJJMdOivYbktVBacGPh-lBc4_gr_92Rjy2HkxyX453bg18U9_M1SAyrcMNq1BVycY4hm3YjiQwALyZgw-cfZOiILUHBFtT7P7APcJqJH9gP9gxkOAM2tr8_ro1bvb2NFqJFQxm9acm3wsTFWNumg2thuL6BwwN22Fpabh8fi-dRj49oZqMEKeDZ9BbhOq7CAn5uPxtkcQjnf5gUUGunRYevRnCk8yJ-QxIZLCOwKF1UWGntpU1OThjrHVYOOfszYs9uILk9FgP6gwk1VuJA0Cv8jcO68KZ7AerMCd_p0sAH0CgSSjrYmQaXmrPjmitcN11BdiX1vO6HmMlgRoic1dTwJ8aH3cciBFIS4sjVkE-qESd8Md73vckUs6LvIcnRPAlLUs6Y-J9NWmbVaDAwXP7hpIxV8x_-gij2XoVb3yVvwBYguOl5YNbsoT-gLH1nrLnr3JwFyXa1WL8WBPx0r9r5OW_dssLnLbVl4D9-mwCI5XHVApGC38SYLKiMFWABvAfpdN9vUlZnmIwdvF96S2Wk567qtrM0AuV46EON4Azum1_UuQ33RZ-d_e8bCDEOSyY2wrBrB75vxxHula06_DZaIe_mjVqB1IVeIQQbagI_Unhzdw38oiR9pB_3O-od5ey2qXtTBNC7hs_t1Cigv_7D6Oj3jaFDZKrZbMUstDF9aqS6tKno6oL_qkksjMJr0yzEgYGSXjVskloVvd3Ylv_-DOe-DQVN0X_rUdw9m9v-DD8uB0F_Ni32_W6saA3_p_Y-k0MJrumuhnTiT7i65LiRFZF61Emd_jz_X6cO_6zq5F_O8n7ZgaJcbb7V7whmQeYiurR3Lg7wd3NESkr-xIJfyM-YfS6Zb4QAUVoOKxsBsi26AKE8IdKqIPzItWuQCjOEt_baiuYlytTofZW9y3pYlLv65SPKHhNH-jFV5SmpNtgQ7mls8OIWYWRNVrqUVGIdloLgDAOJ1awE16azuzJRpQ2_IgqRRG1OB3OudFRZLtHi4EV71kCukUC5aU6QcMB_ebHeRexHZXzcfiOTKZHIKcTMciWDF6ZUL-yLuR90poau13TJ-mcbuZKq0t-oxhxcOBexIIj0S3VWOBLrPoC-ySmU_5DtSP7rb-vJGGqwaZyJYaibeoK7jMWHfGHMOxrawjyifmXWGBH18MVpgB4buHIsT6fCR13t4yNW97i8YxpkXIB1X9bTalP-6kJOqI5XuKbH1GvAyMx_WzPtdQkh4vwfg_Hu_JXmu1VxSDyx_ztdxZMmjgi5ASkhWT8"}</script>
-  <script src="script.js"></script>
+  <script src="script.js?v=mp3-1"></script>
 </body>
 </html>
